@@ -19,6 +19,8 @@ public class GameScreen extends View {
     Runnable runnable;
     static int dx,dy;
     Rect rectangle;
+    Player playerShip;
+    long update = 30;
 
     public GameScreen(Context context) {
         super(context);
@@ -31,6 +33,8 @@ public class GameScreen extends View {
         dx = dimension.x;
         dy = dimension.y;
         rectangle = new Rect(0, 0, dx, dy);
+
+        playerShip = new Player(context);
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -46,5 +50,7 @@ public class GameScreen extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawBitmap(background,null,rectangle,null);
+        canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
+        handler.postDelayed(runnable,update);
     }
 }
