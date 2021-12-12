@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class GameScreen extends View {
@@ -52,5 +53,23 @@ public class GameScreen extends View {
         canvas.drawBitmap(background,null,rectangle,null);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
         handler.postDelayed(runnable,update);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch(event.getAction()){
+
+            // If event is Down, control the player ship.
+            case MotionEvent.ACTION_DOWN:
+                playerShip.playerX = (int)event.getX();
+                break;
+
+            // If event is Move, control the player ship with touch.
+            case MotionEvent.ACTION_MOVE:
+                playerShip.playerX = (int)event.getX();
+                break;
+
+        }
+        return true;
     }
 }
