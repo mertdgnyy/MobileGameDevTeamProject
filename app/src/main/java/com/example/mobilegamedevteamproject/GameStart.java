@@ -1,7 +1,9 @@
 package com.example.mobilegamedevteamproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,12 @@ public class GameStart extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.mainmenu);
 
-        
+
+    }
+
+    public void GameStart(View view){
+
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 }
