@@ -20,7 +20,7 @@ public class Enemy {
 
         number = new Random();
 
-        enemyX = GameScreen.dx + number.nextInt(500);
+        enemyX = 150+ number.nextInt(500);
         enemyY = 0;
         enemySpeed = 10 + number.nextInt(5);
     }
