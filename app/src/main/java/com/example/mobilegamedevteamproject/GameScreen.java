@@ -84,10 +84,8 @@ public class GameScreen extends View {
 
             // If event is Down, control the player ship.
             case MotionEvent.ACTION_DOWN:
-                playerShip.playerX = (int)event.getX();
-                break;
 
-            // If event is Move, control the player ship with touch.
+                // If event is Move, control the player ship with touch.
             case MotionEvent.ACTION_MOVE:
                 playerShip.playerX = (int)event.getX();
                 break;
