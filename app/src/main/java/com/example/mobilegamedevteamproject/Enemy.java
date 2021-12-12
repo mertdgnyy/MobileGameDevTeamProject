@@ -15,7 +15,7 @@ public class Enemy {
 
     public Enemy(Context context) {
         this.context = context;
-        enemyShip = BitmapFactory.decodeResource(context.getResources(), R.drawable.player);
+        enemyShip = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
 
 
         number = new Random();
