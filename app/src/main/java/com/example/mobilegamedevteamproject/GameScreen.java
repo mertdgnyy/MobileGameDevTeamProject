@@ -32,11 +32,12 @@ public class GameScreen extends View {
         Display disp = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         Point dimension = new Point();
         disp.getSize(dimension);
-        dx = dimension.x;
-        dy = dimension.y;
+        dx = dimension.x; //Screen width
+        dy = dimension.y; //Screen Height
         rectangle = new Rect(0, 0, dx, dy);
 
         playerShip = new Player(context);
+        enemyShip = new Enemy(context);
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -54,12 +55,26 @@ public class GameScreen extends View {
         canvas.drawBitmap(background,null,rectangle,null);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
 
-
+        //Limiting the player ship from exceeding the borders of the screen by taking the bitmap's x coordination and width.
         if(playerShip.playerX > dx - playerShip.playerWidth()){
             playerShip.playerX = dx - playerShip.playerWidth();
         }else if(playerShip.playerX < 0){
             playerShip.playerX = 0;
         }
+
+        // We are moving the enemy ship with increasing its speed
+        enemyShip.enemyX += enemyShip.enemySpeed;
+        // If enemyShip collapses with the right wall, reversing the speed, moving to ship left side
+        if(enemyShip.enemyX + enemyShip.enemyWidth() >= dx){
+            enemyShip.enemySpeed *= -1;
+        }
+        // If enemyShip collapses with the left wall, reversing the speed, moving to ship right side
+        if(enemyShip.enemyX <=0){
+            enemyShip.enemySpeed *= -1;
+        }
+
+        canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
+
         handler.postDelayed(runnable,update);
     }
 
