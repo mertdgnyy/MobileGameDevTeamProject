@@ -53,6 +53,13 @@ public class GameScreen extends View {
         super.onDraw(canvas);
         canvas.drawBitmap(background,null,rectangle,null);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
+
+
+        if(playerShip.playerX > dx - playerShip.playerWidth()){
+            playerShip.playerX = dx - playerShip.playerWidth();
+        }else if(playerShip.playerX < 0){
+            playerShip.playerX = 0;
+        }
         handler.postDelayed(runnable,update);
     }
 
