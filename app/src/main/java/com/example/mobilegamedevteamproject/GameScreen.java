@@ -26,6 +26,7 @@ public class GameScreen extends View {
     long update = 30;
     Enemy enemyShip;
     ArrayList<Missile> PlayerMissiles;
+    ArrayList<Missile> EnemyMissiles;
     public GameScreen(Context context) {
         super(context);
         this.context = context;
@@ -38,6 +39,7 @@ public class GameScreen extends View {
         dy = dimension.y; //Screen Height
         rectangle = new Rect(0, 0, dx, dy);
         PlayerMissiles = new ArrayList<>();
+        EnemyMissiles = new ArrayList<>();
         playerShip = new Player(context);
         enemyShip = new Enemy(context);
 
@@ -75,6 +77,7 @@ public class GameScreen extends View {
             enemyShip.enemySpeed *= -1;
         }
 
+
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
 
         handler.postDelayed(runnable,update);
@@ -86,6 +89,11 @@ public class GameScreen extends View {
             canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
         }
 
+
+        for (int i =0; i<EnemyMissiles.size(); i++){
+            EnemyMissiles.get(i).Missile_y += 10;
+            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
+        }
 
 
 
@@ -102,6 +110,7 @@ public class GameScreen extends View {
             case MotionEvent.ACTION_UP:
                 Missile new_missile = new Missile(context, playerShip.playerX, playerShip.playerY);
                 PlayerMissiles.add(new_missile);
+
             // If event is Down, control the player ship.
             case MotionEvent.ACTION_DOWN:
 
