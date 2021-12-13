@@ -12,6 +12,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class GameScreen extends View {
 
     Context context;
@@ -23,7 +25,7 @@ public class GameScreen extends View {
     Player playerShip;
     long update = 30;
     Enemy enemyShip;
-
+    ArrayList<Missile> PlayerMissiles;
     public GameScreen(Context context) {
         super(context);
         this.context = context;
@@ -35,7 +37,7 @@ public class GameScreen extends View {
         dx = dimension.x; //Screen width
         dy = dimension.y; //Screen Height
         rectangle = new Rect(0, 0, dx, dy);
-
+        PlayerMissiles = new ArrayList<>();
         playerShip = new Player(context);
         enemyShip = new Enemy(context);
 
@@ -76,12 +78,30 @@ public class GameScreen extends View {
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
 
         handler.postDelayed(runnable,update);
+
+
+
+        for (int i =0; i<PlayerMissiles.size(); i++){
+            PlayerMissiles.get(i).Missile_y -= 10;
+            canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
+        }
+
+
+
+
+
+
+
+
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getAction()){
 
+            case MotionEvent.ACTION_UP:
+                Missile new_missile = new Missile(context, playerShip.playerX, playerShip.playerY);
+                PlayerMissiles.add(new_missile);
             // If event is Down, control the player ship.
             case MotionEvent.ACTION_DOWN:
 
