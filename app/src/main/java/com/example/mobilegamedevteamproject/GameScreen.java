@@ -48,6 +48,7 @@ public class GameScreen extends View {
             @Override
             public void run() {
                 invalidate();
+
             }
         };
 
@@ -68,13 +69,21 @@ public class GameScreen extends View {
 
         // We are moving the enemy ship with increasing its speed
         enemyShip.enemyX += enemyShip.enemySpeed;
+
         // If enemyShip collapses with the right wall, reversing the speed, moving to ship left side
         if(enemyShip.enemyX + enemyShip.enemyWidth() >= dx){
             enemyShip.enemySpeed *= -1;
+
         }
         // If enemyShip collapses with the left wall, reversing the speed, moving to ship right side
         if(enemyShip.enemyX <=0){
             enemyShip.enemySpeed *= -1;
+
+        }
+
+        for (int i =0; i<EnemyMissiles.size(); i++){
+            EnemyMissiles.get(i).Missile_y += 60;
+            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
         }
 
 
@@ -84,16 +93,12 @@ public class GameScreen extends View {
 
 
 
+
         for (int i =0; i<PlayerMissiles.size(); i++){
-            PlayerMissiles.get(i).Missile_y -= 10;
+            PlayerMissiles.get(i).Missile_y -= 60;
             canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
         }
 
-
-        for (int i =0; i<EnemyMissiles.size(); i++){
-            EnemyMissiles.get(i).Missile_y += 10;
-            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
-        }
 
 
 
@@ -105,21 +110,30 @@ public class GameScreen extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         switch(event.getAction()){
+
 
             case MotionEvent.ACTION_UP:
                 Missile new_missile = new Missile(context, playerShip.playerX, playerShip.playerY);
                 PlayerMissiles.add(new_missile);
 
+                Missile EnemyMissile = new Missile(context, enemyShip.enemyX, enemyShip.enemyY);
+                EnemyMissiles.add(EnemyMissile);
+
             // If event is Down, control the player ship.
             case MotionEvent.ACTION_DOWN:
+
 
                 // If event is Move, control the player ship with touch.
             case MotionEvent.ACTION_MOVE:
                 playerShip.playerX = (int)event.getX();
+
                 break;
 
         }
         return true;
     }
+
+
 }
