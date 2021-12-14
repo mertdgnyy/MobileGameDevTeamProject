@@ -29,4 +29,8 @@ public class Player {
     int playerWidth(){
         return player_bitmap.getWidth();
     }
+
+    int playerHeight(){
+        return player_bitmap.getHeight();
+    }
 }

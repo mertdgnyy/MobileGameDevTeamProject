@@ -14,7 +14,7 @@ public class Missile {
     public Missile (Context context, int Missile_x, int Missile_y){
         this.context = context;
         missile = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.laser);
+                R.drawable.laserr);
 
         this.Missile_x = Missile_x;
         this.Missile_y = Missile_y;
@@ -24,6 +24,12 @@ public class Missile {
     public Bitmap getMissile() {
         return missile;
     }
+
+    public int tWidth(){
+        return missile.getWidth(); // It was in the GameScreen.java class that simply used for getting width of the bitmap
+    }
+
+
 }
 
 
