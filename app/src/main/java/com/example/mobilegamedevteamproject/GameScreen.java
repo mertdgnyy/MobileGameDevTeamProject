@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen extends View {
 
@@ -27,6 +28,9 @@ public class GameScreen extends View {
     Enemy enemyShip;
     ArrayList<Missile> PlayerMissiles;
     ArrayList<Missile> EnemyMissiles;
+    boolean enemyShot = false;
+    Random number;
+
     public GameScreen(Context context) {
         super(context);
         this.context = context;
@@ -42,6 +46,7 @@ public class GameScreen extends View {
         EnemyMissiles = new ArrayList<>();
         playerShip = new Player(context);
         enemyShip = new Enemy(context);
+        number = new Random();
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -81,10 +86,51 @@ public class GameScreen extends View {
 
         }
 
-        for (int i =0; i<EnemyMissiles.size(); i++){
-            EnemyMissiles.get(i).Missile_y += 60;
-            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
+        //If enemyShot is false (No shots left , array list < 1), enemyShip send Missiles randomly with the specified traveling ranges.
+        if(enemyShot == false){
+            if(enemyShip.enemyX >= 350 + number.nextInt(500)){
+                Missile enemyMissle = new Missile(context, enemyShip.enemyX + enemyShip.enemyWidth() /2, enemyShip.enemyY);
+                EnemyMissiles.add(enemyMissle);
+                enemyShot = true;
+            }
+            if(enemyShip.enemyX >= 500 + number.nextInt(700)){
+                Missile enemyMissle = new Missile(context, enemyShip.enemyX + enemyShip.enemyWidth() /2, enemyShip.enemyY);
+                EnemyMissiles.add(enemyMissle);
+                enemyShot = true;
+            }if(enemyShip.enemyX >= 700 + number.nextInt(900)){
+                Missile enemyMissle = new Missile(context, enemyShip.enemyX + enemyShip.enemyWidth() /2, enemyShip.enemyY);
+                EnemyMissiles.add(enemyMissle);
+                enemyShot = true;
+            }
+            else{
+                Missile enemyMissle = new Missile(context, enemyShip.enemyX + enemyShip.enemyWidth() /2, enemyShip.enemyY);
+                EnemyMissiles.add(enemyMissle);
+                enemyShot = true;
+            }
+
         }
+
+        //Drawing the enemyship Missles.
+        for (int i =0; i<EnemyMissiles.size(); i++){
+            EnemyMissiles.get(i).Missile_y += 30;
+            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
+
+            if(EnemyMissiles.get(i).Missile_y >= dy){
+                EnemyMissiles.remove(i);
+            }
+
+            if(EnemyMissiles.size() < 1){
+                enemyShot = false;
+            }
+
+        }
+
+
+        for (int i =0; i<PlayerMissiles.size(); i++){
+            PlayerMissiles.get(i).Missile_y -= 30;
+            canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
+        }
+
 
 
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
@@ -94,10 +140,6 @@ public class GameScreen extends View {
 
 
 
-        for (int i =0; i<PlayerMissiles.size(); i++){
-            PlayerMissiles.get(i).Missile_y -= 60;
-            canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
-        }
 
 
 
@@ -118,11 +160,9 @@ public class GameScreen extends View {
                 Missile new_missile = new Missile(context, playerShip.playerX, playerShip.playerY);
                 PlayerMissiles.add(new_missile);
 
-                Missile EnemyMissile = new Missile(context, enemyShip.enemyX, enemyShip.enemyY);
-                EnemyMissiles.add(EnemyMissile);
 
-            // If event is Down, control the player ship.
-            case MotionEvent.ACTION_DOWN:
+//            // If event is Down, control the player ship.
+//            case MotionEvent.ACTION_DOWN:
 
 
                 // If event is Move, control the player ship with touch.
