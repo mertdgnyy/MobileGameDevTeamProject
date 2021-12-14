@@ -26,6 +26,7 @@ public class GameScreen extends View {
     Player playerShip;
     long update = 30;
     Enemy enemyShip;
+    Enemy2 enemy2Ship;
     ArrayList<Missile> PlayerMissiles;
     ArrayList<Missile> EnemyMissiles;
     boolean enemyShot = false;
@@ -46,6 +47,7 @@ public class GameScreen extends View {
         EnemyMissiles = new ArrayList<>();
         playerShip = new Player(context);
         enemyShip = new Enemy(context);
+        enemy2Ship = new Enemy2(context);
         number = new Random();
 
         handler = new Handler();
@@ -74,10 +76,16 @@ public class GameScreen extends View {
 
         // We are moving the enemy ship with increasing its speed
         enemyShip.enemyX += enemyShip.enemySpeed;
+        enemy2Ship.enemy2X += enemy2Ship.enemy2Speed;
 
         // If enemyShip collapses with the right wall, reversing the speed, moving to ship left side
         if(enemyShip.enemyX + enemyShip.enemyWidth() >= dx){
             enemyShip.enemySpeed *= -1;
+
+        }
+
+        if(enemy2Ship.enemy2X + enemy2Ship.enemy2Width() >= dx){
+            enemy2Ship.enemy2Speed *= -1;
 
         }
         // If enemyShip collapses with the left wall, reversing the speed, moving to ship right side
@@ -85,6 +93,11 @@ public class GameScreen extends View {
             enemyShip.enemySpeed *= -1;
 
         }
+        if(enemy2Ship.enemy2X <=0){
+            enemy2Ship.enemy2Speed *= -1;
+
+        }
+
 
         //If enemyShot is false (No shots left , array list < 1), enemyShip send Missiles randomly with the specified traveling ranges.
         if(enemyShot == false){
@@ -134,7 +147,7 @@ public class GameScreen extends View {
 
 
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
-
+        canvas.drawBitmap(enemy2Ship.enemy2Bitmap(), enemy2Ship.enemy2X, enemy2Ship.enemy2Y, null);
         handler.postDelayed(runnable,update);
 
 
