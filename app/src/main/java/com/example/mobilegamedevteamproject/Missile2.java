@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+//Player missile
 public class Missile2 {
 
     Bitmap missile2;
@@ -20,7 +21,7 @@ public class Missile2 {
 
     }
 
-    public Bitmap getMissile() {
+    public Bitmap getMissile2() {
         return missile2;
     }
 }

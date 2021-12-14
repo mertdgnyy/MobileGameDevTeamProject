@@ -27,9 +27,11 @@ public class GameScreen extends View {
     long update = 30;
     Enemy enemyShip;
     Enemy2 enemy2Ship;
-    ArrayList<Missile> PlayerMissiles;
+    ArrayList<Missile2> PlayerMissiles;
     ArrayList<Missile> EnemyMissiles;
+    ArrayList<Missile> Enemy2Missiles;
     boolean enemyShot = false;
+    boolean enemy2Shot = false;
     Random number;
 
     public GameScreen(Context context) {
@@ -45,6 +47,7 @@ public class GameScreen extends View {
         rectangle = new Rect(0, 0, dx, dy);
         PlayerMissiles = new ArrayList<>();
         EnemyMissiles = new ArrayList<>();
+        Enemy2Missiles = new ArrayList<>();
         playerShip = new Player(context);
         enemyShip = new Enemy(context);
         enemy2Ship = new Enemy2(context);
@@ -122,6 +125,28 @@ public class GameScreen extends View {
             }
 
         }
+        if(enemy2Shot == false){
+            if(enemy2Ship.enemy2X >= 250 + number.nextInt(400)){
+                Missile enemy2Missle = new Missile(context, enemy2Ship.enemy2X + enemy2Ship.enemy2Width() /2, enemy2Ship.enemy2Y);
+                Enemy2Missiles.add(enemy2Missle);
+                enemy2Shot = true;
+            }
+            if(enemy2Ship.enemy2X >= 400 + number.nextInt(600)){
+                Missile enemy2Missle = new Missile(context, enemy2Ship.enemy2X + enemy2Ship.enemy2Width() /2, enemy2Ship.enemy2Y);
+                Enemy2Missiles.add(enemy2Missle);
+                enemy2Shot = true;
+            }if(enemy2Ship.enemy2X >= 600 + number.nextInt(800)){
+                Missile enemy2Missle = new Missile(context, enemy2Ship.enemy2X + enemy2Ship.enemy2Width() /2, enemy2Ship.enemy2Y);
+                Enemy2Missiles.add(enemy2Missle);
+                enemy2Shot = true;
+            }
+            else{
+                Missile enemy2Missle = new Missile(context, enemy2Ship.enemy2X + enemy2Ship.enemy2Width() /2, enemy2Ship.enemy2Y);
+                Enemy2Missiles.add(enemy2Missle);
+                enemy2Shot = true;
+            }
+
+        }
 
         //Drawing the enemyship Missles.
         for (int i =0; i<EnemyMissiles.size(); i++){
@@ -137,11 +162,24 @@ public class GameScreen extends View {
             }
 
         }
+        for (int i =0; i<Enemy2Missiles.size(); i++){
+            Enemy2Missiles.get(i).Missile_y += 30;
+            canvas.drawBitmap(Enemy2Missiles.get(i).getMissile(), Enemy2Missiles.get(i).Missile_x,Enemy2Missiles.get(i).Missile_y, null);
+
+            if(Enemy2Missiles.get(i).Missile_y >= dy){
+                Enemy2Missiles.remove(i);
+            }
+
+            if(Enemy2Missiles.size() < 1){
+                enemy2Shot = false;
+            }
+
+        }
 
 
         for (int i =0; i<PlayerMissiles.size(); i++){
-            PlayerMissiles.get(i).Missile_y -= 30;
-            canvas.drawBitmap(PlayerMissiles.get(i).getMissile(), PlayerMissiles.get(i).Missile_x,PlayerMissiles.get(i).Missile_y, null);
+            PlayerMissiles.get(i).Missile2_y -= 30;
+            canvas.drawBitmap(PlayerMissiles.get(i).getMissile2(), PlayerMissiles.get(i).Missile2_x,PlayerMissiles.get(i).Missile2_y, null);
         }
 
 
@@ -170,7 +208,7 @@ public class GameScreen extends View {
 
 
             case MotionEvent.ACTION_UP:
-                Missile new_missile = new Missile(context, playerShip.playerX, playerShip.playerY);
+                Missile2 new_missile = new Missile2(context, playerShip.playerX, playerShip.playerY);
                 PlayerMissiles.add(new_missile);
 
 
