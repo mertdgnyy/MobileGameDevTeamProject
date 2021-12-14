@@ -33,6 +33,8 @@ public class GameScreen extends View {
     boolean enemyShot = false;
     boolean enemy2Shot = false;
     Random number;
+    int health = 3;
+    boolean gameIs = true;
 
     public GameScreen(Context context) {
         super(context);
@@ -183,10 +185,16 @@ public class GameScreen extends View {
         }
 
 
+        if(health == 0){
+            gameIs = false;
+        }
 
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
         canvas.drawBitmap(enemy2Ship.enemy2Bitmap(), enemy2Ship.enemy2X, enemy2Ship.enemy2Y, null);
-        handler.postDelayed(runnable,update);
+
+        if(gameIs == true){
+            handler.postDelayed(runnable,update);
+        }
 
 
 
