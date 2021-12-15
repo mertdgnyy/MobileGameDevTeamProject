@@ -28,7 +28,9 @@ public class Missile {
     public int tWidth(){
         return missile.getWidth(); // It was in the GameScreen.java class that simply used for getting width of the bitmap
     }
-
+    public int tHeight(){
+        return missile.getHeight(); // It was in the GameScreen.java class that simply used for getting height of the bitmap
+    }
 
 }
 

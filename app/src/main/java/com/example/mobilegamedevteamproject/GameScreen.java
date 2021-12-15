@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -33,8 +35,12 @@ public class GameScreen extends View {
     boolean enemyShot = false;
     boolean enemy2Shot = false;
     Random number;
-    int health = 5;
+    int health = 6;
+    int score = 0;
+    int textSize = 70;
     boolean gameIs = true;
+    Paint paintScore;
+
 
     public GameScreen(Context context) {
         super(context);
@@ -55,6 +61,12 @@ public class GameScreen extends View {
         enemy2Ship = new Enemy2(context);
         number = new Random();
 
+        paintScore = new Paint();
+        paintScore.setTextSize(textSize);
+        paintScore.setTextAlign(Paint.Align.LEFT);
+        paintScore.setColor(Color.WHITE);
+
+
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -63,6 +75,8 @@ public class GameScreen extends View {
 
             }
         };
+
+
 
     }
 
@@ -73,6 +87,7 @@ public class GameScreen extends View {
             gameIs = false;
         }
         canvas.drawBitmap(background,null,rectangle,null);
+        canvas.drawText("Score: " + score, 0,textSize, paintScore);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
 
         //Limiting the player ship from exceeding the borders of the screen by taking the bitmap's x coordination and width.
@@ -172,7 +187,6 @@ public class GameScreen extends View {
         for (int i =0; i<Enemy2Missiles.size(); i++){
             Enemy2Missiles.get(i).Missile_y += 30;
             canvas.drawBitmap(Enemy2Missiles.get(i).getMissile(), Enemy2Missiles.get(i).Missile_x,Enemy2Missiles.get(i).Missile_y, null);
-
             if(Enemy2Missiles.get(i).Missile_y >= dy){
                 Enemy2Missiles.remove(i);
             }
@@ -185,8 +199,23 @@ public class GameScreen extends View {
 
 
         for (int i =0; i<PlayerMissiles.size(); i++){
-            PlayerMissiles.get(i).Missile2_y -= 30;
+            PlayerMissiles.get(i).Missile2_y -= 50;
             canvas.drawBitmap(PlayerMissiles.get(i).getMissile2(), PlayerMissiles.get(i).Missile2_x,PlayerMissiles.get(i).Missile2_y, null);
+                if(PlayerMissiles.get(i).Missile2_x <= enemy2Ship.enemy2X + enemy2Ship.enemy2Width()
+                    && PlayerMissiles.get(i).Missile2_y <= enemy2Ship.enemy2Width()
+                    && PlayerMissiles.get(i).Missile2_y >= enemy2Ship.enemy2Y && (PlayerMissiles.get(i).Missile2_x >= enemy2Ship.enemy2X)
+                    || PlayerMissiles.get(i).Missile2_x <= enemyShip.enemyX + enemyShip.enemyWidth()
+                    && PlayerMissiles.get(i).Missile2_y <= enemyShip.enemyWidth()
+                    && PlayerMissiles.get(i).Missile2_y >= enemyShip.enemyY &&
+                    PlayerMissiles.get(i).Missile2_x >= enemyShip.enemyX){
+                    score++;
+                    PlayerMissiles.remove(i);
+                }
+
+           else if(PlayerMissiles.get(i).Missile2_y <=0){
+               PlayerMissiles.remove(i);}
+
+
         }
 
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
@@ -198,16 +227,9 @@ public class GameScreen extends View {
 
 
 
-
-
-
-
-
-
-
-
-
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
