@@ -170,32 +170,51 @@ public class GameScreen extends View {
         }
 
         //Drawing the enemyship Missles.
-       for (int i =0; i<EnemyMissiles.size(); i++){
-            EnemyMissiles.get(i).Missile_y += 30;
-            canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x,EnemyMissiles.get(i).Missile_y, null);
+        // If missiles reach bottom of the screen remove shot in else if
+        // if missiles and playership matches, remove shot also.
+        // Collision detection is simply satisfied with the 4 edges of the bitmaps,
+        //if missile is inside of the playership bitmap by providing 4 condition if statement, collision detection happens.
+       for (int i =0; i<EnemyMissiles.size(); i++) {
+           EnemyMissiles.get(i).Missile_y += 30;
+           canvas.drawBitmap(EnemyMissiles.get(i).getMissile(), EnemyMissiles.get(i).Missile_x, EnemyMissiles.get(i).Missile_y, null);
+           if ((EnemyMissiles.get(i).Missile_y <= dy)
+                   && (EnemyMissiles.get(i).Missile_x >= playerShip.playerX)
+                   && (EnemyMissiles.get(i).Missile_x <= (playerShip.playerX + playerShip.playerWidth()))
+                   && EnemyMissiles.get(i).Missile_y >= playerShip.playerY) {
+               health--;
+               EnemyMissiles.remove(i);}
 
-            if(EnemyMissiles.get(i).Missile_y >= dy){
+           else if (EnemyMissiles.get(i).Missile_y >= dy) {
                EnemyMissiles.remove(i);
-            }
-            if(EnemyMissiles.size() == 0){
-                enemyShot = false;
-            }
-        }
+           }
+           if (EnemyMissiles.size() == 0) {
+               enemyShot = false;
+           }
+       }
+
 
 
         //Drawing the enemy2ship Missles.
-        for (int i =0; i<Enemy2Missiles.size(); i++){
+        for (int i =0; i<Enemy2Missiles.size(); i++) {
             Enemy2Missiles.get(i).Missile_y += 30;
-            canvas.drawBitmap(Enemy2Missiles.get(i).getMissile(), Enemy2Missiles.get(i).Missile_x,Enemy2Missiles.get(i).Missile_y, null);
-            if(Enemy2Missiles.get(i).Missile_y >= dy){
+            canvas.drawBitmap(Enemy2Missiles.get(i).getMissile(), Enemy2Missiles.get(i).Missile_x, Enemy2Missiles.get(i).Missile_y, null);
+            if ((Enemy2Missiles.get(i).Missile_y <= dy)
+                    && (Enemy2Missiles.get(i).Missile_x >= playerShip.playerX)
+                    && (Enemy2Missiles.get(i).Missile_x <= (playerShip.playerX + playerShip.playerWidth()))
+                    && Enemy2Missiles.get(i).Missile_y >= playerShip.playerY) {
+                health--;
+                Enemy2Missiles.remove(i);}
+
+            else if (Enemy2Missiles.get(i).Missile_y >= dy) {
                 Enemy2Missiles.remove(i);
             }
 
-            if(Enemy2Missiles.size() == 0){
+            if (Enemy2Missiles.size() == 0) {
                 enemy2Shot = false;
             }
 
         }
+
 
 
         for (int i =0; i<PlayerMissiles.size(); i++){
