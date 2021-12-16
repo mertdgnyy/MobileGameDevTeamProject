@@ -1,5 +1,5 @@
 package com.example.mobilegamedevteamproject;
-
+//Metehan Kundak-Mert Doganay MobileGameDev Team Project
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;

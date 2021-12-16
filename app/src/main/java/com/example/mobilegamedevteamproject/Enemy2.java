@@ -1,5 +1,5 @@
 package com.example.mobilegamedevteamproject;
-
+//Metehan Kundak-Mert Doganay MobileGameDev Team Project
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,5 +1,5 @@
 package com.example.mobilegamedevteamproject;
-
+//Metehan Kundak-Mert Doganay MobileGameDev Team Project
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
