@@ -7,21 +7,31 @@
     android:gravity="center"
     android:background="@drawable/space"
     tools:context=".MainActivity">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"
+        android:text="Space Shooter Game"
+        android:textSize="30dp"
+        android:textColor="@color/white"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="GameStart"/>
+            android:onClick="GameStart"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/pbutton"/>
+
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Start"
+        android:layout_marginBottom="70dp"
+        android:text="Click Play To Start"
         android:textSize="30dp"
-        android:onClick="GameStart"/>
+        android:textColor="@color/white"/>
+
 
 </LinearLayout>
