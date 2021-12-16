@@ -23,6 +23,11 @@
             android:name=".MainActivity"
             android:screenOrientation="landscape">
         </activity>
+
+        <activity
+            android:name=".EndGame"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package com.example.mobilegamedevteamproject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -84,13 +86,27 @@ public class GameScreen extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(health == 0){
-            gameIs = false;
-        }
+
 
         canvas.drawBitmap(background,null,rectangle,null);
         canvas.drawText("Score: " + score, 1830,textSize, paintScore);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
+
+        for(int x = health/3; x>0; x--){
+            canvas.drawBitmap(heart,-70 + heart.getWidth() * x  , 0 ,null);
+        }
+        if(health == 0){
+            gameIs = false;
+            handler = null;
+            Intent intent = new Intent(context, EndGame.class);
+            intent.putExtra("score", score);
+            context.startActivity(intent);
+            ((Activity) context).finish();
+        }
+
+
+
+
 
         //Limiting the player ship from exceeding the borders of the screen by taking the bitmap's x coordination and width.
         if(playerShip.playerX > dx - playerShip.playerWidth()){
@@ -243,9 +259,6 @@ public class GameScreen extends View {
         canvas.drawBitmap(enemy2Ship.enemy2Bitmap(), enemy2Ship.enemy2X, enemy2Ship.enemy2Y, null);
 
         heartHeight = heart.getHeight();
-        for(int x = health/3; x>0; x--){
-            canvas.drawBitmap(heart,-70 + heart.getWidth() * x  , 0 ,null);
-        }
 
         if(gameIs == true){
             handler.postDelayed(runnable,update);
