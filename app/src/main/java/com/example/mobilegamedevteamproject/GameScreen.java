@@ -20,7 +20,8 @@ import java.util.Random;
 public class GameScreen extends View {
 
     Context context;
-    Bitmap background;
+    Bitmap background, heart;
+    int heartHeight;
     Handler handler;
     Runnable runnable;
     static int dx,dy;
@@ -35,9 +36,9 @@ public class GameScreen extends View {
     boolean enemyShot = false;
     boolean enemy2Shot = false;
     Random number;
-    int health = 6;
+    int health = 9;
     int score = 0;
-    int textSize = 70;
+    int textSize = 60;
     boolean gameIs = true;
     Paint paintScore;
 
@@ -46,7 +47,7 @@ public class GameScreen extends View {
         super(context);
         this.context = context;
         background = BitmapFactory.decodeResource(getResources(),R.drawable.space);
-
+        heart = BitmapFactory.decodeResource(getResources(),R.drawable.heart);
         Display disp = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         Point dimension = new Point();
         disp.getSize(dimension);
@@ -86,8 +87,9 @@ public class GameScreen extends View {
         if(health == 0){
             gameIs = false;
         }
+
         canvas.drawBitmap(background,null,rectangle,null);
-        canvas.drawText("Score: " + score, 0,textSize, paintScore);
+        canvas.drawText("Score: " + score, 1830,textSize, paintScore);
         canvas.drawBitmap(playerShip.get_Player(), playerShip.playerX, playerShip.playerY, null);
 
         //Limiting the player ship from exceeding the borders of the screen by taking the bitmap's x coordination and width.
@@ -239,6 +241,11 @@ public class GameScreen extends View {
 
         canvas.drawBitmap(enemyShip.enemyBitmap(), enemyShip.enemyX, enemyShip.enemyY, null);
         canvas.drawBitmap(enemy2Ship.enemy2Bitmap(), enemy2Ship.enemy2X, enemy2Ship.enemy2Y, null);
+
+        heartHeight = heart.getHeight();
+        for(int x = health/3; x>0; x--){
+            canvas.drawBitmap(heart,-70 + heart.getWidth() * x  , 0 ,null);
+        }
 
         if(gameIs == true){
             handler.postDelayed(runnable,update);
